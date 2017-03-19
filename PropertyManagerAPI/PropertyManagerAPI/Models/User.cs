@@ -24,6 +24,6 @@ namespace PropertyManagerAPI.Models
 
         public virtual ICollection<Property> Properties { get; set; }
         public virtual ICollection<PropertySearch> PropertySearches { get; set; }
-
+        public virtual ICollection<Interest> Interests { get; set; }
     }
 }

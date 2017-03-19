@@ -17,28 +17,38 @@ namespace PropertyManagerAPI.Data
         public IDbSet<User> Users { get; set; }
         public IDbSet<Property> Properties { get; set; }
         public IDbSet<PropertySearch> PropertySearches { get; set;  }
+        public IDbSet<Interest> Interests { get; set; }
 
         //ON MODEL CREATING - RELATIONSHIPS
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
+                        .HasMany(i => i.Interests)
+                        .WithRequired(u => u.User)
+                        .HasForeignKey(u => u.UserId);
+
+            modelBuilder.Entity<User>()
+                        .HasMany(p => p.Properties)
+                        .WithRequired(u => u.User)
+                        .HasForeignKey(u => u.UserId);
+
+            modelBuilder.Entity<Property>()
+                        .HasMany(i => i.Interests)
+                        .WithRequired(p => p.Property)
+                        .HasForeignKey(p => p.PropertyId)
+                        .WillCascadeOnDelete(false);
+                        
+
+            modelBuilder.Entity<User>()
                         .HasMany(ps => ps.PropertySearches)
                         .WithRequired(u => u.User)
                         .HasForeignKey(u => u.UserId);
-        
-        
-            modelBuilder.Entity<User>()
-                        .HasMany(u => u.Properties)
-                        .WithMany(p => p.Users)
-                        .Map(ts =>
-                        {
-                            ts.MapLeftKey("UserId");
-                            ts.MapRightKey("PropertyId");
-                            ts.ToTable("Interests");
-                        });
-            
 
+            //Compund Key for Interest table
+            modelBuilder.Entity<Interest>()
+                        .HasKey(i => new { i.UserId, i.PropertyId });
 
+        
             base.OnModelCreating(modelBuilder);
         }
 

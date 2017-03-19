@@ -18,14 +18,16 @@ namespace PropertyManagerAPI.Models
         public int ContactPhone { get; set; }
         public decimal Rent { get; set; }
         public int SquareFootage { get; set; }
+        public int Bedroom { get; set; }
+        public int Bathroom { get; set; }
         public bool IsPetFriendly { get; set; }
         public int LeaseTerm { get; set; }
         public string PropertyImage { get; set; }
 
 
         public virtual User User { get; set; }
-        public virtual ICollection<User> Users { get; set; }
-
+        
+        public virtual ICollection<Interest> Interests { get; set; }
 
 
 

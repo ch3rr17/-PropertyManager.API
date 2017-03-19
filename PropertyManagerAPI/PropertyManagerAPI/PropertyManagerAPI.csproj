@@ -130,18 +130,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\PropertiesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\PropertiesDataContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703170346355_InitialCreate.cs" />
-    <Compile Include="Migrations\201703170346355_InitialCreate.Designer.cs">
-      <DependentUpon>201703170346355_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201703181736457_InitialMigration.cs" />
+    <Compile Include="Migrations\201703181736457_InitialMigration.Designer.cs">
+      <DependentUpon>201703181736457_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703181740154_RemovedCollectionOfUsersFromProperty.cs" />
+    <Compile Include="Migrations\201703181740154_RemovedCollectionOfUsersFromProperty.Designer.cs">
+      <DependentUpon>201703181740154_RemovedCollectionOfUsersFromProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703181841279_AddedBedroomAndBathroomToProperty.cs" />
+    <Compile Include="Migrations\201703181841279_AddedBedroomAndBathroomToProperty.Designer.cs">
+      <DependentUpon>201703181841279_AddedBedroomAndBathroomToProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703182221550_ChangedPropertySearchValues.cs" />
+    <Compile Include="Migrations\201703182221550_ChangedPropertySearchValues.Designer.cs">
+      <DependentUpon>201703182221550_ChangedPropertySearchValues.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\PropertySearch.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Interest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -158,11 +173,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Utility\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703170346355_InitialCreate.resx">
-      <DependentUpon>201703170346355_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703181736457_InitialMigration.resx">
+      <DependentUpon>201703181736457_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703181740154_RemovedCollectionOfUsersFromProperty.resx">
+      <DependentUpon>201703181740154_RemovedCollectionOfUsersFromProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703181841279_AddedBedroomAndBathroomToProperty.resx">
+      <DependentUpon>201703181841279_AddedBedroomAndBathroomToProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703182221550_ChangedPropertySearchValues.resx">
+      <DependentUpon>201703182221550_ChangedPropertySearchValues.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
