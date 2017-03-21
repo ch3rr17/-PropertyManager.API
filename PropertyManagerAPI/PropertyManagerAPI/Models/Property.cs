@@ -15,7 +15,7 @@ namespace PropertyManagerAPI.Models
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
-        public int ContactPhone { get; set; }
+        public string ContactPhone { get; set; }
         public decimal Rent { get; set; }
         public int SquareFootage { get; set; }
         public int Bedroom { get; set; }

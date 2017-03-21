@@ -71,6 +71,9 @@ namespace PropertyManagerAPI.Controllers
 
         }
 
+        //Search properties by username
+        //GET: api/Properties/GetSearchPropertiesByUser
+        [HttpGet]
         [Route("api/Properties/GetSearchPropertiesByUser")]
         public IHttpActionResult GetSearchPropertiesByUser(string username)
         {
@@ -98,30 +101,47 @@ namespace PropertyManagerAPI.Controllers
             }));
         }
 
-        //Users(tenants) can search for a property
-        [Route("api/Properties/GetSearchProperties")]
+        //Users can search for a property
+        //GET: api/Properties/SearchProperties 
+        [HttpGet]
+        [Route("api/Properties/SearchProperties")]
         public IHttpActionResult GetSearchProperties([FromUri] PropertySearch search)
         {
             IQueryable<Property> resultSet = db.Properties;
 
-            if(!string.IsNullOrEmpty(search.City))
+            if (search.IsPetFriendly)
+            {
+                resultSet = resultSet.Where(p => p.IsPetFriendly == search.IsPetFriendly);
+            }
+            else
+            {
+                resultSet = resultSet.Where(p => p.IsPetFriendly == search.IsPetFriendly);
+            }
+
+            if (!string.IsNullOrEmpty(search.City))
             {
                 resultSet = resultSet.Where(p => p.City == search.City);
             }
 
-            if(!string.IsNullOrEmpty(search.ZipCode))
+            if (!string.IsNullOrEmpty(search.ZipCode))
             {
                 resultSet = resultSet.Where(p => p.ZipCode == search.ZipCode);
             }
 
-            if(search.MinimumRent > 0 || search.MaximumRent > 0)
+            if (search.MinimumRent > 0 || search.MaximumRent > 0)
             {
                 resultSet = resultSet.Where(p => p.Rent >= search.MinimumRent || p.Rent <= search.MaximumRent);
             }
 
-            if(search.IsPetFriendly)
+
+            if (search.Bedroom > 0)
             {
-                resultSet = resultSet.Where(p => p.IsPetFriendly == true);
+                resultSet = resultSet.Where(p => p.Bedroom == search.Bedroom);
+            }
+
+            if (search.Bathroom > 0)
+            {
+                resultSet = resultSet.Where(p => p.Bathroom == search.Bathroom);
             }
 
             return Ok(resultSet.Select(p => new
@@ -144,8 +164,6 @@ namespace PropertyManagerAPI.Controllers
             }));
 
         }
-
-
 
         // PUT: api/Properties/5
         [ResponseType(typeof(void))]
@@ -196,6 +214,24 @@ namespace PropertyManagerAPI.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = property.PropertyId }, property);
         }
+
+        //POST: api/Properties/{propertyId}/Users/{userId}
+        //User can add an interest to a property
+        [HttpPost]
+        [Route("api/Properties/{propertyId}/Users/{userId}")]
+        public IHttpActionResult AddInterestToProperty(int propertyId, int userId)
+        {
+            Interest interest = new Interest();
+
+            interest.PropertyId = propertyId;
+            interest.UserId = userId;
+
+            db.Interests.Add(interest);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
 
         // DELETE: api/Properties/5
         [ResponseType(typeof(Property))]

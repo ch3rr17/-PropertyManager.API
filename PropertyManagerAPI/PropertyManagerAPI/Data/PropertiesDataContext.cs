@@ -22,13 +22,9 @@ namespace PropertyManagerAPI.Data
         //ON MODEL CREATING - RELATIONSHIPS
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                        .HasMany(i => i.Interests)
-                        .WithRequired(u => u.User)
-                        .HasForeignKey(u => u.UserId);
 
             modelBuilder.Entity<User>()
-                        .HasMany(p => p.Properties)
+                        .HasMany(i => i.Interests)
                         .WithRequired(u => u.User)
                         .HasForeignKey(u => u.UserId);
 
@@ -36,8 +32,12 @@ namespace PropertyManagerAPI.Data
                         .HasMany(i => i.Interests)
                         .WithRequired(p => p.Property)
                         .HasForeignKey(p => p.PropertyId)
-                        .WillCascadeOnDelete(false);
-                        
+                        .WillCascadeOnDelete(false); //allows an interest to be deleted without deleting a property
+
+            modelBuilder.Entity<User>()
+                        .HasMany(p => p.Properties)
+                        .WithRequired(u => u.User)
+                        .HasForeignKey(u => u.UserId);
 
             modelBuilder.Entity<User>()
                         .HasMany(ps => ps.PropertySearches)

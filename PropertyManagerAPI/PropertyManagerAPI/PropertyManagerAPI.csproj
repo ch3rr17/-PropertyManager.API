@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\InterestsController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\PropertiesDataContext.cs" />
@@ -151,6 +152,10 @@
     <Compile Include="Migrations\201703182221550_ChangedPropertySearchValues.cs" />
     <Compile Include="Migrations\201703182221550_ChangedPropertySearchValues.Designer.cs">
       <DependentUpon>201703182221550_ChangedPropertySearchValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703210424157_ChangedPhoneTypeToString.cs" />
+    <Compile Include="Migrations\201703210424157_ChangedPhoneTypeToString.Designer.cs">
+      <DependentUpon>201703210424157_ChangedPhoneTypeToString.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Property.cs" />
@@ -187,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703182221550_ChangedPropertySearchValues.resx">
       <DependentUpon>201703182221550_ChangedPropertySearchValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703210424157_ChangedPhoneTypeToString.resx">
+      <DependentUpon>201703210424157_ChangedPhoneTypeToString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
