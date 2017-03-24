@@ -232,6 +232,8 @@ namespace PropertyManagerAPI.Controllers
             return Ok();
         }
 
+   
+
 
         // DELETE: api/Properties/5
         [ResponseType(typeof(Property))]

@@ -44,7 +44,7 @@ namespace PropertyManagerAPI.Data
                         .WithRequired(u => u.User)
                         .HasForeignKey(u => u.UserId);
 
-            //Compund Key for Interest table
+            //Compound Key for Interest table
             modelBuilder.Entity<Interest>()
                         .HasKey(i => new { i.UserId, i.PropertyId });
 

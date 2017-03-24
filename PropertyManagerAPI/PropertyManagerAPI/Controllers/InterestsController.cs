@@ -67,6 +67,20 @@ namespace PropertyManagerAPI.Controllers
             }));
         }
 
+        //GET: PROPERTIES WITH INTERESTED USERS
+        [Route("api/Properties/{propertyId}/InterestedProperties/{userId}")]
+        public IHttpActionResult GetInterestedProperties(int userId, int propertyId)
+        {
+            var resultSet = db.Interests.Where(i => i.UserId == userId && i.PropertyId == propertyId);
+
+            return Ok(resultSet.Select(i => new
+            {
+                i.Property.PropertyName,
+                i.User.FirstName,
+                i.User.LastName
+            }));
+        }
+
 
         // PUT: api/Interests/5
         [ResponseType(typeof(void))]
@@ -133,6 +147,28 @@ namespace PropertyManagerAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = interest.UserId }, interest);
         }
 
+
+        [HttpDelete]
+        [Route("api/Interests/{propertyId}/Interests/{userId}")]
+        public IHttpActionResult DeleteInterestToProperty(int propertyId, int userId)
+        {
+            //Interest interest = db.Interests.Find(propertyId, userId);
+
+            Interest interest = db.Interests.FirstOrDefault(i => i.PropertyId == propertyId && i.UserId == userId);
+
+
+
+            if (interest == null)
+            {
+                return NotFound();
+            }
+
+            db.Interests.Remove(interest);
+            db.SaveChanges();
+
+            return Ok(interest);
+        }
+
         // DELETE: api/Interests/5
         [ResponseType(typeof(Interest))]
         public IHttpActionResult DeleteInterest(int id)
@@ -148,6 +184,7 @@ namespace PropertyManagerAPI.Controllers
 
             return Ok(interest);
         }
+
 
         protected override void Dispose(bool disposing)
         {
