@@ -24,6 +24,8 @@ namespace PropertyManagerAPI.Controllers
             {
                 p.UserId,
                 p.PropertyName,
+                p.Address1,
+                p.Address2,
                 p.City,
                 p.State,
                 p.ZipCode,
@@ -84,6 +86,7 @@ namespace PropertyManagerAPI.Controllers
             return Ok(resultSet.Select(p => new
             {
                 p.UserId,
+                p.User.IsLandlord,
                 p.PropertyName,
                 p.Address1,
                 p.Address2,
@@ -97,7 +100,9 @@ namespace PropertyManagerAPI.Controllers
                 p.LeaseTerm,
                 p.PropertyImage,
                 p.Bedroom,
-                p.Bathroom
+                p.Bathroom,
+                p.User.UserName
+            
             }));
         }
 
@@ -109,14 +114,7 @@ namespace PropertyManagerAPI.Controllers
         {
             IQueryable<Property> resultSet = db.Properties;
 
-            if (search.IsPetFriendly)
-            {
-                resultSet = resultSet.Where(p => p.IsPetFriendly == search.IsPetFriendly);
-            }
-            else
-            {
-                resultSet = resultSet.Where(p => p.IsPetFriendly == search.IsPetFriendly);
-            }
+         
 
             if (!string.IsNullOrEmpty(search.City))
             {
@@ -128,11 +126,15 @@ namespace PropertyManagerAPI.Controllers
                 resultSet = resultSet.Where(p => p.ZipCode == search.ZipCode);
             }
 
-            if (search.MinimumRent > 0 || search.MaximumRent > 0)
+            if (search.MinimumRent > 0 && search.MaximumRent > 0)
+            {
+                resultSet = resultSet.Where(p => p.Rent >= search.MinimumRent && p.Rent <= search.MaximumRent);
+                
+            }
+            else if(search.MinimumRent > 0 || search.MaximumRent > 0)
             {
                 resultSet = resultSet.Where(p => p.Rent >= search.MinimumRent || p.Rent <= search.MaximumRent);
             }
-
 
             if (search.Bedroom > 0)
             {
@@ -144,9 +146,18 @@ namespace PropertyManagerAPI.Controllers
                 resultSet = resultSet.Where(p => p.Bathroom == search.Bathroom);
             }
 
+            if (search.IsPetFriendly)
+            {
+                resultSet = resultSet.Where(p => p.IsPetFriendly == search.IsPetFriendly);
+            }
+            //else
+            //{
+            //    resultSet = resultSet.Where(p => p.IsPetFriendly == search.IsPetFriendly);
+            //}
+
             return Ok(resultSet.Select(p => new
             {
-                p.UserId,
+                p.PropertyId,
                 p.PropertyName,
                 p.Address1,
                 p.Address2,
@@ -162,7 +173,6 @@ namespace PropertyManagerAPI.Controllers
                 p.Bedroom,
                 p.Bathroom
             }));
-
         }
 
         // PUT: api/Properties/5
