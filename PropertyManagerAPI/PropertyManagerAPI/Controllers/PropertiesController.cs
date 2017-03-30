@@ -23,6 +23,7 @@ namespace PropertyManagerAPI.Controllers
             var resultSet = db.Properties.Select(p => new
             {
                 p.UserId,
+                p.PropertyId,
                 p.PropertyName,
                 p.Address1,
                 p.Address2,
@@ -86,6 +87,7 @@ namespace PropertyManagerAPI.Controllers
             return Ok(resultSet.Select(p => new
             {
                 p.UserId,
+                p.PropertyId,
                 p.User.IsLandlord,
                 p.PropertyName,
                 p.Address1,

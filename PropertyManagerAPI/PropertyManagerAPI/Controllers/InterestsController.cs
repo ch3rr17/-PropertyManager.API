@@ -50,6 +50,7 @@ namespace PropertyManagerAPI.Controllers
 
             return Ok(resultSet.Select(i => new
             {
+                i.Property.PropertyId,
                 i.Property.PropertyName,
                 i.Property.Address1,
                 i.Property.Address2,
